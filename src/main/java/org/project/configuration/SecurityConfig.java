@@ -17,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.project.service.UserService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.project.filter.JwtAuthenticationFilter;
+import org.project.service.RefreshTokenService;
 
 @Configuration
 @EnableWebSecurity
