@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.project.exception.UserAlreadyExistsException;
+
+import java.util.List;
+
 import org.project.exception.EmailAlreadyExistsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,10 +27,10 @@ public class UserService {
     }
 
     public boolean register(User user) {
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserAlreadyExistsException("Username is already taken!");
         }
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new EmailAlreadyExistsException("Email is already in use!");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -46,5 +49,9 @@ public class UserService {
         // Получение имени пользователя из контекста Spring Security
         var username = SecurityContextHolder.getContext().getAuthentication().getName();
         return getByUsername(username);
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 }

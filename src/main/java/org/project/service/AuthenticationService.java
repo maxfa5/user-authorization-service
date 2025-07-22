@@ -9,7 +9,6 @@ import org.project.DTO.SignUpRequest;
 import org.project.DTO.SignInRequest;
 import org.project.DTO.JwtAuthenticationResponse;
 
-
 @Service
 public class AuthenticationService {
     private final UserService userService;
@@ -17,7 +16,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationService(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager) {
+    public AuthenticationService(UserService userService, JwtService jwtService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
@@ -35,11 +34,11 @@ public class AuthenticationService {
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(request.getPassword())
                 .role(request.getRole())
                 .build();
 
-        userService.create(user);
+        userService.register(user);
 
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);
