@@ -1,0 +1,8 @@
+<!-- src/main/resources/saml/sp-metadata.xml -->
+<md:EntityDescriptor entityID="urn:spring:saml:sp">
+  <md:SPSSODescriptor>
+    <md:AssertionConsumerService 
+      Location="http://localhost:8080/login/saml2/sso/mock"
+      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"/>
+  </md:SPSSODescriptor>
+</md:EntityDescriptor>

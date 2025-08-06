@@ -1,0 +1,15 @@
+spring:
+  security:
+    saml2:
+      relyingparty:
+        registration:
+          keycloak:
+            identityprovider:
+              entity-id: urn:keycloak:saml:idp
+              singlesignon.url: http://localhost:8080/realms/saml-demo/protocol/saml
+              verification.credentials:
+                - certificate-location: "classpath:saml/keycloak.crt"
+            serviceprovider:
+              entity-id: urn:spring:saml:sp
+              assertion-consumer-service-location: http://localhost:8081/login/saml2/sso/keycloak
+              metadata-location: "classpath:saml/sp-metadata.xml"
